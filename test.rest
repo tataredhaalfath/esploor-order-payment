@@ -1,0 +1,51 @@
+#### ORDERS
+### create order
+post http://localhost:8001/api/orders
+Content-Type: application/json
+
+{
+  "course":{
+    "id":3,
+    "name":"kursus ui/ux",
+    "thumbnail":"www.image.test",
+    "price":150000,
+    "level":"beginner"
+  },
+
+  "user":{
+    "id":7,
+    "name":"al fath",
+    "email":"alfath@test.com"
+  }
+}
+
+### get order
+get http://localhost:8000/api/orders?user_id=5
+
+
+#### WEBHOOK
+### cek signature key webhook
+post http://localhost:8000/api/webhook
+Content-Type: application/json
+
+{
+  "transaction_time": "2020-01-09 18:27:19",
+  "transaction_status": "capture",
+  "transaction_id": "57d5293c-e65f-4a29-95e4-5959c3fa335b",
+  "status_message": "midtrans payment notification",
+  "status_code": "200",
+  "signature_key": "930f9829dc8f66120f771e77a809a4a34c0cd0ab5a3f5651e07d5c3f23f6dc9b7aa144d3c5dddf0024dd08c29b8b73c16183857b28499bb8769d1bcdc234af55",
+  "payment_type": "credit_card",
+  "order_id": "1-abc12",
+  "merchant_id": "G141532850",
+  "masked_card": "481111-1114",
+  "gross_amount": "10000.00",
+  "fraud_status": "accept",
+  "eci": "05",
+  "currency": "IDR",
+  "channel_response_message": "Approved",
+  "channel_response_code": "00",
+  "card_type": "credit",
+  "bank": "bni",
+  "approval_code": "1578569243927"
+}
