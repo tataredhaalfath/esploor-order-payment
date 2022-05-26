@@ -5,8 +5,8 @@ Content-Type: application/json
 
 {
   "course":{
-    "id":3,
-    "name":"kursus ui/ux",
+    "id":,
+    "name":"Kelas express",
     "thumbnail":"www.image.test",
     "price":150000,
     "level":"beginner"
@@ -20,12 +20,12 @@ Content-Type: application/json
 }
 
 ### get order
-get http://localhost:8000/api/orders?user_id=5
+get http://localhost:8001/api/orders?user_id=7
 
 
 #### WEBHOOK
 ### cek signature key webhook
-post http://localhost:8000/api/webhook
+post http://localhost:8001/api/webhook
 Content-Type: application/json
 
 {

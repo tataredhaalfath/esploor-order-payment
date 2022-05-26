@@ -17,9 +17,18 @@ class OrderController extends Controller
             return $query->where('user_id', '=', $userId);
         });
 
+        $data = $orders->get();
+        // $metadata = json_encode($data['metadata']);
+        // $data['metadata'] = $metadata;
+
+        foreach($data as $dat){
+            $metadata = json_decode($dat['metadata']);
+            $dat['metadata'] = $metadata;
+        }
+
         return response()->json([
             'status' => 'success',
-            'data' => $orders->get(),
+            'data' => $data,
         ]);
     }
 
