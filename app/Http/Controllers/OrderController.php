@@ -21,7 +21,7 @@ class OrderController extends Controller
         // $metadata = json_encode($data['metadata']);
         // $data['metadata'] = $metadata;
 
-        foreach($data as $dat){
+        foreach ($data as $dat) {
             $metadata = json_decode($dat['metadata']);
             $dat['metadata'] = $metadata;
         }
@@ -76,7 +76,7 @@ class OrderController extends Controller
             'course_id' => $course['id'],
             'course_price' => $course['price'],
             'course_name' => $course['name'],
-            'thumbnail' => $course['thumbnail'],
+            'course_thumbnail' => $course['thumbnail'],
             'level' => $course['level'],
         ];
 
