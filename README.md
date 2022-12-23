@@ -1,64 +1,207 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Getting Started
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Installation
+```bash
+  $ composer install
+  $ php artisan serve
+```
 
-## About Laravel
+## Setup ENV
+```exampe
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=order_payment_database
+  DB_USERNAME=root
+  DB_PASSWORD=
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+  MIDTRANS_SERVER_KEY={your-midtrans-server-key}
+  MIDTRANS_PRODUCTION=false
+  MIDTRANS_3DS=true
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+  SERVICE_COURSE_URL=http://localhost:8000/
+```
+## Database Migration
+```bash
+  $ php artisan migrate
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Description
+  This sevice will handle order and payment flow, the payment method already integrated with Midtrans payment gateway.
 
-## Learning Laravel
+  This service running on laravel framework. Laravel is a web application framework with expressive, elegant syntax.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## API Documentation
+- you can see the API Documentation in the api-docs.rest file
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## API Contract
 
-## Laravel Sponsors
+- [Create new order](#create-new-order)
+- [Get Order](#get-order)
+- [Webhook](#webhook)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+### Create New Order
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Description
+This api for create new order
 
-## Contributing
+### Method
+`POST`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### URL
+```diff
+{URL_API}/api/orders
+```
 
-## Code of Conduct
+### Body
+```diff
+{
+  "course":{
+    "id":1,
+    "name":"Kelas express",
+    "thumbnail":"www.image.test",
+    "price":250000,
+    "level":"advance"
+  },
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  "user":{
+    "id":5,
+    "name":"fath",
+    "email":"fath@gmail.com"
+  }
+}
+```
+### Response
+```diff
+{
+    "status": "success",
+    "data": {
+        "user_id": 5,
+        "course_id": 1,
+        "updated_at": "2022-12-23 04:12:45",
+        "created_at": "2022-12-23 04:12:43",
+        "id": 3,
+        "snap_url": "https://app.sandbox.midtrans.com/snap/v3/redirection/eba56350-6d14-4c26-b170-afd742189ba5",
+        "metadata": {
+            "course_id": 1,
+            "course_price": 250000,
+            "course_name": "Kelas express",
+            "course_thumbnail": "www.image.test",
+            "level": "advance"
+        }
+    }
+}
+```
+<br>
+<br>
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Get Order
 
-## License
+### Description
+This api for get all order data
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Method
+`GET`
+
+### URL
+```diff
+{URL_API}/api/orders/{user_id}
+```
+
+### Paras
+```diff
+user_id = [user_id](optional)
+```
+
+### Response
+```diff
+{
+    "status": "success",
+    "data": [
+        {
+            "id": 1,
+            "status": "success",
+            "user_id": 1,
+            "course_id": 1,
+            "snap_url": "https://app.sandbox.midtrans.com/snap/v3/redirection/67ee2afa-a351-4547-9ee6-c8ca4b9fb845",
+            "metadata": {
+                "course_id": 1,
+                "course_price": 250000,
+                "course_name": "Kelas Laravel oke",
+                "course_thumbnail": null,
+                "level": "advance"
+            },
+            "created_at": "2022-12-22 13:12:33",
+            "updated_at": "2022-12-22 13:12:43"
+        },
+        {
+            "id": 2,
+            "status": "pending",
+            "user_id": 1,
+            "course_id": 1,
+            "snap_url": "https://app.sandbox.midtrans.com/snap/v3/redirection/5637df4e-c2b6-4fbc-823c-cbb776f1712b",
+            "metadata": {
+                "course_id": 1,
+                "course_price": 250000,
+                "course_name": "Kelas express",
+                "course_thumbnail": "www.image.test",
+                "level": "advance"
+            },
+            "created_at": "2022-12-22 14:12:18",
+            "updated_at": "2022-12-22 14:12:18"
+        },
+      ...
+    ]
+}
+```
+<br>
+<br>
+
+---
+
+### Webhook
+
+### Description
+This api webhook for connectifity to Midtrans
+
+### Method
+`POST`
+
+### URL
+```diff
+{URL_API}/api/webhook
+```
+
+### Body
+```diff
+{
+  "transaction_time": "2020-01-09 18:27:19",
+  "transaction_status": "capture",
+  "transaction_id": "57d5293c-e65f-4a29-95e4-5959c3fa335b",
+  "status_message": "midtrans payment notification",
+  "status_code": "200",
+  "signature_key": "930f9829dc8f66120f771e77a809a4a34c0cd0ab5a3f5651e07d5c3f23f6dc9b7aa144d3c5dddf0024dd08c29b8b73c16183857b28499bb8769d1bcdc234af55",
+  "payment_type": "credit_card",
+  "order_id": "1-abc12",
+  "merchant_id": "G141532850",
+  "masked_card": "481111-1114",
+  "gross_amount": "10000.00",
+  "fraud_status": "accept",
+  "eci": "05",
+  "currency": "IDR",
+  "channel_response_message": "Approved",
+  "channel_response_code": "00",
+  "card_type": "credit",
+  "bank": "bni",
+  "approval_code": "1578569243927"
+}
+```
+
+<br>
+<br>
+
+---
+

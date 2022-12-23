@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
   "course":{
-    "id":,
+    "id":1,
     "name":"Kelas express",
     "thumbnail":"www.image.test",
     "price":150000,
